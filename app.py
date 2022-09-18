@@ -1,8 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import threading
 import uvicorn
 import logging
-import requests
 
 from DinningHall import DinningHall
 
@@ -11,7 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 @app.post("/distribution")
-def read_root():
+async def get_distribution(request: Request):
+
+    distribution = await request.json()
     logger.warning('Food received')
 
     return {"Hello": "World"}

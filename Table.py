@@ -1,11 +1,12 @@
-from .config import MENU
+from config import MENU
+from Order import Order
 import random
 import time
 import uuid
 
 
 class Table:
-    def __init__(self, table_id, status='Free'):
+    def __init__(self, table_id, status='Making order'):
         self.status = status
         self.order = None
         self.table_id = table_id
@@ -34,14 +35,7 @@ class Table:
 
         max_wait = 1.3 * max([food_item['preparation-time'] for food_item in items])  # preparation-time_
 
-        self.order = {
-            "order_id": str(uuid.uuid4()),
-            "table_id": self.table_id,
-            "waiter_id": waiter_id,
-            "items": item_ids,
-            "priority": priority,
-            "max_wait": max_wait,
-            "pick_up_time": time.time()
-        }
+        self.order = Order(order_id=str(uuid.uuid4()),table_id=self.table_id,waiter_id=waiter_id,
+                           items=item_ids,priority=priority,max_wait=max_wait,pick_up_time=time.time())
 
         return self.order

@@ -1,6 +1,6 @@
-from .config import *
-from .Table import Table
-from .Waiter import Waiter
+from config import *
+from Table import Table
+from Waiter import Waiter
 import logging
 import threading
 
@@ -19,4 +19,4 @@ class DinningHall:
         logger.warning('Starting Dinning Hall Test')
 
         for waiter in self.waiters:
-            threading.Thread(target=waiter,).start()
+            threading.Thread(target=waiter.serve_tables, args=(self.tables,)).start()

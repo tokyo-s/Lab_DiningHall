@@ -1,8 +1,14 @@
 import logging
 import requests
+import json
 
 logger = logging.getLogger(__name__)
 KITCHEN_URL = "http://kitchen-container:8000"
+
+
+def send_order_to_kitchen(order):
+    logger.warning('Sending order to kitchen')
+    requests.post(f'{KITCHEN_URL}/order', json=order.__dict__)
 
 
 class Waiter:
@@ -16,14 +22,8 @@ class Waiter:
                     table.waiting_order()
                     self.take_order(table)
 
-
     def take_order(self, table):
         order = table.generate_order(self.waiter_id)
-        ## TODO: include here time needed for order to be taken (2,4) seconds
+        # TODO: include here time needed for order to be taken (2,4) seconds
         logger.warning('Sending order to kitchen')
-        self.send_order_to_kitchen(order)
-
-
-    def send_order_to_kitchen(self, order):
-        logger.warning('Sending order to kitchen')
-        requests.post(f'{KITCHEN_URL}/order', json=order.__dict__)
+        send_order_to_kitchen(order)
