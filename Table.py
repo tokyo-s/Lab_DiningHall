@@ -28,7 +28,7 @@ class Table:
 
     def generate_order(self, waiter_id):
 
-        nr_foods = random.randint(1, 4)
+        nr_foods = random.randint(1, 10)
         items = random.choices(MENU, k=nr_foods)
         item_ids = [item['id'] for item in items]
         priority = random.randint(1, 5)
