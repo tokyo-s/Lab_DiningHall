@@ -1,3 +1,4 @@
+import threading
 from config import MENU
 from Order import Order
 import random
@@ -10,6 +11,7 @@ class Table:
         self.status = status
         self.order = None
         self.table_id = table_id
+        self.lock = threading.Lock()
 
     def waiting_order(self):
         self.status = 'Waiting order'

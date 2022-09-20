@@ -1,28 +1,27 @@
-from fastapi import FastAPI, Request
+from flask import Flask, request
 import threading
-import uvicorn
 import logging
 
 from DinningHall import DinningHall
 
-app = FastAPI()
+app = Flask(__name__)
 logger = logging.getLogger(__name__)
 
 
-@app.post("/distribution")
-async def get_distribution(request: Request):
-
-    distribution = await request.json()
+@app.route('/distribution', methods=['POST'])
+def get_distribution():
+    distribution = request.json
+    hall.send_distribution(distribution)
     logger.warning('Food received')
 
-    return {"Hello": "World"}
+    return {}
 
 
 if __name__ == '__main__':
 
     threading.Thread(
         target=lambda: {
-            uvicorn.run(app, host='0.0.0.0', port=8001)
+            app.run(debug=True, use_reloader=False, host="0.0.0.0", port=8001)
         }
     ).start()
 

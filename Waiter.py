@@ -1,4 +1,6 @@
 import logging
+import time
+import random
 import requests
 import json
 
@@ -18,12 +20,15 @@ class Waiter:
     def serve_tables(self, tables):
         while True:
             for table in tables:
+                table.lock.acquire()
                 if table.is_making_order():
                     table.waiting_order()
+                    table.lock.release()
                     self.take_order(table)
+                else:
+                    table.lock.release()
 
     def take_order(self, table):
         order = table.generate_order(self.waiter_id)
-        # TODO: include here time needed for order to be taken (2,4) seconds
-        logger.warning('Sending order to kitchen')
+        time.sleep(random.randint(2, 4))
         send_order_to_kitchen(order)
