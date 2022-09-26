@@ -25,5 +25,3 @@ class DinningHall:
     def send_distribution(self, distribution):
         waiter = self.waiters[distribution.waiter_id]
         waiter.receive_order(distribution)
-
-        # self.tables[distribution['table_id']].making_order() TODO: remove
