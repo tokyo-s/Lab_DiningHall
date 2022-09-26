@@ -23,5 +23,7 @@ class DinningHall:
             threading.Thread(target=waiter.serve_tables, args=(self.tables,)).start()
 
     def send_distribution(self, distribution):
-        time.sleep(2)
-        self.tables[distribution['table_id']].making_order()
+        waiter = self.waiters[distribution.waiter_id]
+        waiter.receive_order(distribution)
+
+        # self.tables[distribution['table_id']].making_order() TODO: remove
