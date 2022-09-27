@@ -10,7 +10,7 @@ KITCHEN_URL = "http://kitchen-container:8000"
 
 
 def send_order_to_kitchen(order):
-    logger.warning('Sending order to kitchen')
+    logger.warning(f'Waiter {order.waiter_id} sends order {order.order_id} to kitchen')
     requests.post(f'{KITCHEN_URL}/order', json=order.__dict__)
 
 

@@ -59,4 +59,4 @@ class Table:
         time.sleep(random.randint(2, 4) * TIME_UNIT / 1000)
         self.making_order()
 
-        logger.info(f"Table {self.id} waiting for the waiter")
+        logger.info(f"Table {self.table_id} waiting for the waiter")

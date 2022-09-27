@@ -31,6 +31,7 @@ def get_distribution():
     distribution_json = request.json
     distribution = json_to_distribution(distribution_json)
     logger.warning(f'Received order {distribution.order_id}, Cooking time = {distribution.cooking_time}, '
+                   f'cooking_details  {distribution.cooking_details}, '
                    f'sending for distribution')
     hall.send_distribution(distribution)
     logger.warning('Food received')
