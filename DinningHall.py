@@ -3,7 +3,6 @@ from Table import Table
 from Waiter import Waiter
 import logging
 import threading
-import time
 
 logger = logging.getLogger(__name__)
 
