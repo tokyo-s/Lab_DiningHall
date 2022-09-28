@@ -34,7 +34,6 @@ def get_distribution():
                    f'cooking_details  {distribution.cooking_details}, '
                    f'sending for distribution')
     hall.send_distribution(distribution)
-    logger.warning('Food received')
 
     return {}
 
