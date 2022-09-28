@@ -53,8 +53,11 @@ class Waiter:
         for distribution in self.distributions:
             if distribution.table_id not in self.serving_tables:
                 logger.warning(f'Distribution {distribution.order_id} gone to wrong Waiter - {self.waiter_id}')
+                continue
 
-            self.serving_tables[distribution.table_id].validate_order(distribution)
+            if not self.serving_tables[distribution.table_id].validate_order(distribution):
+                logger.warning(f'Distribution order {distribution.order_id} is wrong')
+                continue
 
             self.serving_tables[distribution.table_id].free()
             del self.serving_tables[distribution.table_id]
