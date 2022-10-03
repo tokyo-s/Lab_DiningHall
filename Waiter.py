@@ -15,8 +15,9 @@ def send_order_to_kitchen(order):
 
 
 class Waiter:
-    def __init__(self, waiter_id):
+    def __init__(self, waiter_id, dinning_hall):
         self.waiter_id = waiter_id
+        self.dinning_hall = dinning_hall
         self.distributions = []
         self.distribution_lock = threading.Lock()
         self.serving_tables = {}
@@ -35,12 +36,13 @@ class Waiter:
             self.serve_distribution()
 
     def take_order(self, table):
+        time.sleep(random.randint(2, 4) * TIME_UNIT / 1000)
         order = table.generate_order(self.waiter_id)
         self.serving_tables[table.table_id] = table
-        time.sleep(random.randint(2, 4) * TIME_UNIT / 1000)
+        table.waiting_order()
         send_order_to_kitchen(order)
 
-    def receive_order(self, distribution):
+    def receive_distribution(self, distribution):
         self.distribution_lock.acquire()
         self.distributions.append(distribution)
         self.distribution_lock.release()
@@ -59,6 +61,7 @@ class Waiter:
                 logger.warning(f'Distribution order {distribution.order_id} is wrong')
                 continue
 
+            self.dinning_hall.calculate_order_mark(distribution)
             self.serving_tables[distribution.table_id].free()
             del self.serving_tables[distribution.table_id]
 
